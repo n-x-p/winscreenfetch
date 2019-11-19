@@ -25,7 +25,7 @@ namespace WinScreenfetch
                 int i = 0;
                 foreach (string[] line in logo)
                 {
-                    if (i < (data.Count - 1))
+                    if (i < (data.Count))
                     {
                         Console.Write("  ");
                         for (int j = 0; j < logoColors.Length; j++)
