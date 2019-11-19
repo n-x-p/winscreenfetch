@@ -54,7 +54,8 @@ namespace WinScreenfetch
 				foreach (ManagementObject obj in win32Proc.Get())
 				{
 					CPU = obj["Name"].ToString();
-					break;
+                    CPU = $"{CPU.Split('@')[0]} @ {obj["NumberOfCores"].ToString()}x{CPU.Split('@')[1]}";
+					//break;
 				}
 			}
 		}
