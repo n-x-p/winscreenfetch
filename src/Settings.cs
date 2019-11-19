@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management;
 using Microsoft.Win32;
 
@@ -12,7 +13,6 @@ namespace WinScreenfetch
 		public string OS { get; set; }
 		public string Version { get; set; }
 		public string Uptime { get; set; }
-		public string Manufacturer { get; set; }
 		public string Shell { get; set; }
 		public string CPU { get; set; }
 		public string RAM { get; set; }
@@ -39,26 +39,22 @@ namespace WinScreenfetch
 		private void SetCPUAndMemory()
 		{
 			using (ManagementObjectSearcher win32Proc = new ManagementObjectSearcher("select * from Win32_Processor"),
-			win32CompSys = new ManagementObjectSearcher("select * from Win32_ComputerSystem"),
-				win32Memory = new ManagementObjectSearcher("select * from Win32_PhysicalMemory"))
+				win32Memory = new ManagementObjectSearcher("select * from Win32_OperatingSystem"))
 			{
-				long memory = 0;
-				foreach (ManagementObject mem in win32Memory.Get())
-					memory += long.Parse(mem["Capacity"].ToString());
+                var memoryValues = win32Memory.Get().Cast<ManagementObject>().Select(mo => new {
+                    FreePhysicalMemory = Double.Parse(mo["FreePhysicalMemory"].ToString()),
+                    TotalVisibleMemorySize = Double.Parse(mo["TotalVisibleMemorySize"].ToString())
+                }).FirstOrDefault();
 
-				RAM = $"{(memory / (1024 * 1024))}MiB";
+                long used = (long)(memoryValues.TotalVisibleMemorySize - memoryValues.FreePhysicalMemory);
+                long total = (long)memoryValues.TotalVisibleMemorySize;
+                RAM = $"{used / 1024}MiB / {total / 1024}MiB";
 
 				foreach (ManagementObject obj in win32Proc.Get())
 				{
 					CPU = obj["Name"].ToString();
 					break;
 				}
-
-				//foreach (ManagementObject comp in win32CompSys.Get())
-				//{
-				//	Manufacturer = $"{comp["Manufacturer"]} {comp["SystemFamily"]} {comp["Model"]}";
-				//	break;
-				//}
 			}
 		}
 
@@ -94,7 +90,6 @@ namespace WinScreenfetch
 					{ new Data { Value=$"{UserName}@{ComputerName}" } },
 					{ new Data { Label="OS", Value=OS} },
 					{ new Data { Label="Version", Value=Version } },
-					//{ new Data { Label="Manufacturer", Value=Manufacturer} },
 					{ new Data { Label="Uptime", Value=Uptime} },
 					{ new Data { Label="Shell", Value=Shell} },
 					{ new Data { Label="CPU", Value=CPU} },
