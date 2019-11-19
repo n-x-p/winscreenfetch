@@ -54,11 +54,11 @@ namespace WinScreenfetch
 					break;
 				}
 
-				foreach (ManagementObject comp in win32CompSys.Get())
-				{
-					Manufacturer = $"{comp["Manufacturer"]} {comp["SystemFamily"]} {comp["Model"]}";
-					break;
-				}
+				//foreach (ManagementObject comp in win32CompSys.Get())
+				//{
+				//	Manufacturer = $"{comp["Manufacturer"]} {comp["SystemFamily"]} {comp["Model"]}";
+				//	break;
+				//}
 			}
 		}
 
@@ -94,7 +94,7 @@ namespace WinScreenfetch
 					{ new Data { Value=$"{UserName}@{ComputerName}" } },
 					{ new Data { Label="OS", Value=OS} },
 					{ new Data { Label="Version", Value=Version } },
-					{ new Data { Label="Manufacturer", Value=Manufacturer} },
+					//{ new Data { Label="Manufacturer", Value=Manufacturer} },
 					{ new Data { Label="Uptime", Value=Uptime} },
 					{ new Data { Label="Shell", Value=Shell} },
 					{ new Data { Label="CPU", Value=CPU} },
