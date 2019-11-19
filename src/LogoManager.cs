@@ -6,6 +6,8 @@ namespace WinScreenfetch
 	{
         public static List<string[]> Windows()
         {
+            // Decided to pick an unusual way to split up the logo parts for colors
+            // Color order is Red, Blue, Green, Yellow
             List<string[]> m_list = new List<string[]>()
             {
                 new string[]{ string.Empty, string.Empty, "                                       ```...--://+oo`", string.Empty },

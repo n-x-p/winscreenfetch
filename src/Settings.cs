@@ -41,6 +41,7 @@ namespace WinScreenfetch
 			using (ManagementObjectSearcher win32Proc = new ManagementObjectSearcher("select * from Win32_Processor"),
 				win32Memory = new ManagementObjectSearcher("select * from Win32_OperatingSystem"))
 			{
+                // credit to ZOXEXEVO's post on https://stackoverflow.com/questions/10027341/c-sharp-get-used-memory-in
                 var memoryValues = win32Memory.Get().Cast<ManagementObject>().Select(mo => new {
                     FreePhysicalMemory = Double.Parse(mo["FreePhysicalMemory"].ToString()),
                     TotalVisibleMemorySize = Double.Parse(mo["TotalVisibleMemorySize"].ToString())
