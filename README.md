@@ -13,3 +13,5 @@ The ASCII art was created thanks to this site: http://www.text-image.com/convert
 This is a fork of [Sebastian Gomez's winscreenfetch](https://github.com/sebagomez/winscreenfetch).<sup>1</sup>
 
 <sup>[1] This branch has only been tested on windows 10</sup>
+
+**minor edit
