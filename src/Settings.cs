@@ -75,9 +75,9 @@ namespace WinScreenfetch
 
 			string uptime = $"{mins}m";
 			if (days > 0)
-				uptime = $"{days}d {hours}h {mins}m";
+				uptime = $"{days}d {hours%24}h {mins%60}m";
 			else if (hours > 0)
-				uptime = $"{hours}h {mins}m";
+				uptime = $"{hours}h {mins%60}m";
 
 			return uptime;
 		}
